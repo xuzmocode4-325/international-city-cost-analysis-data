@@ -3,8 +3,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 class EstExpensesView:
+    """
+    View class for rendering visualizations of estimated expenses.
+    """
+
     @staticmethod
     def render_horizontal_bar_chart(data):
+        """
+        Render a horizontal bar chart based on provided data.
+
+        Args:
+            data (dict): Dictionary containing expense categories as keys and their corresponding amounts as values.
+        """
         fig, ax = plt.subplots(figsize=(12, 8))
         keys = list(data.keys())
         values = list(data.values())
@@ -18,7 +28,13 @@ class EstExpensesView:
         st.pyplot(fig)
 
     @staticmethod
-    def render_pie_chart(data): 
+    def render_pie_chart(data):
+        """
+        Render a pie chart based on provided data.
+
+        Args:
+            data (dict): Dictionary containing expense categories as keys and their corresponding amounts as values.
+        """
         fig, ax = plt.subplots(figsize=(6, 8))
         labels = list(data.keys())
         values = list(data.values())

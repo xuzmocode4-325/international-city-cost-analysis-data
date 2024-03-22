@@ -1,4 +1,4 @@
-base_url = 'https://www.numbeo.com/cost-of-living/historical-data-city-selector'
+# Dummy data 
 
 country_cities_mapping = {
     'Kenya': ['Nairobi'],
