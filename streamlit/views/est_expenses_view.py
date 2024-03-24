@@ -39,7 +39,7 @@ class EstExpensesView:
         labels = list(data.keys())
         values = list(data.values())
 
-        ax.pie(values, labels=labels, autopct='%1.1f%%', startangle=90)
+        ax.pie(values, autopct='%1.1f%%', startangle=90)
         ax.set_title('Expenses Distribution')
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), borderaxespad=1)
+        ax.legend(loc='center left', labels=labels, bbox_to_anchor=(1, 0, 0.5, 1), borderaxespad=1)
         st.pyplot(fig)

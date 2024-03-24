@@ -29,44 +29,82 @@ selected_city = st.sidebar.selectbox("Select City:", selected_cities)
 # Test
 
 city_data_controller = CityDataController(selected_city)
+totals = city_data_controller.calculate_averages()
+
+# 
+
+st.write(f"""    
+    <p style='font-size: 24px;'>
+        Analysis for {selected_city}, {selected_country}
+    </p>""", unsafe_allow_html=True
+)
+
+# Input field for income
+user_income = st.number_input('Your Income:', format='%g', value=1)
+
+col1, col2 = st.columns([1, 1], gap="large")
+
+with col1:
+
+# Input fields for each expense category 
+    
+    expenses_controller.model.rent = st.number_input('Rent:', format='%g', value=totals["Avg. Rent"])
+    expenses_controller.model.transport = st.number_input('Transport:', format='%g', value=totals["Avg. Transport"])
+    expenses_controller.model.food = st.number_input('Food:', format='%g', value=totals["Avg. Market"])
+
+with col2:
+    expenses_controller.model.utilities = st.number_input('Utilities:', format='%g', value=totals["Avg. Utilities"])
+    expenses_controller.model.clothing = st.number_input('Clothing:', format='%g', value=totals["Avg. Clothing"])
+    expenses_controller.model.leisure = st.number_input('Leisure:', format='%g', value=totals["Avg. Leisure"])
+
+expenses_controller.update_expenses()  # Update the budget after sliders change
+   
 
 # Define layout columns
-col1, col2 = st.columns([0.4, 0.6], gap="large")
+col1, col2, col3 = st.columns([1, 1, 1], gap="large")
 
 with col1:
     # Render average cost of living and input fields for expenses
     st.write(f"""
         <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 10px; padding: 10px; width:100%;'> 
-            <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Average Cost of Living in {selected_city}</p>
-            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 36px;'>
-            {city_data_controller.calculate_averages()['Avg. Total']}  
-            ({country_currency[selected_country]})</p>
+            <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Estimated Costs</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 24px;'>
+                {country_currency[selected_country]} 
+                {totals['Avg. Total']}  
+            </p>
         </div>
-    """, unsafe_allow_html=True)
-    
-    # Input fields for each expense category
-    expenses_controller.model.rent = st.number_input('Rent:', format='%g', value=1)
-    expenses_controller.model.transport = st.number_input('Transport:', format='%g', value=1)
-    expenses_controller.model.food = st.number_input('Food:', format='%g', value=1)
-    expenses_controller.model.utilities = st.number_input('Utilities:', format='%g', value=1)
-    expenses_controller.model.clothing = st.number_input('Clothing:', format='%g', value=1)
-    expenses_controller.model.leisure = st.number_input('Leisure:', format='%g', value=1)
+    """, unsafe_allow_html=True
+)
 
-    expenses_controller.update_expenses()  # Update the budget after sliders change
 
 with col2:
     # Render user's expenses
     st.write(f"""
         <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 10px; padding: 10px; width:100%;'>
             <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Expenses:</p>
-            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 36px;'>{'{:,.2f}'.format(expenses_controller.expenses)} ({country_currency[selected_country]})</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 24px;'>
+                {country_currency[selected_country]}
+                {'{:,.2f}'.format(expenses_controller.expenses)} 
+            </p>
         </div>
-    """, unsafe_allow_html=True)
-   
-# Define layout columns for visualizations
-col3, col4 = st.columns([0.4, 0.6], gap="large")
+    """, unsafe_allow_html=True
+)
+
+with col3:
+    # Render user's income
+    st.write(f"""
+        <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 10px; padding: 10px; width:100%;'>
+            <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Income:</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 24px;'>
+                {country_currency[selected_country]}
+                {'{:,.2f}'.format(user_income)} 
+            </p>
+        </div>
+    """, unsafe_allow_html=True
+)
 
 # Render side-by-side horizontal bar chart
+print(selected_city)
 expenses_controller.plot_side_side_hbar(selected_city)
 
 # Render pie chart
