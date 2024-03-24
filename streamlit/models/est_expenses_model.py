@@ -7,7 +7,13 @@ class EstExpensesModel:
         """
         Initialize the EstExpensesModel.
         """
-        pass
+        self.budget = None
+        self.rent = None
+        self.transport = None
+        self.food = None
+        self.utilities = None
+        self.clothing = None
+        self.leisure = None
 
     def calculate_total_expenses(self, rent, transport, food, utilities, clothing, leisure):
         """
