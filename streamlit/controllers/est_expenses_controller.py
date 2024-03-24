@@ -60,17 +60,17 @@ class EstExpensesController:
         width = 0.35
 
         # Plotting the side-by-side horizontal bar chart
-        fig, ax = plt.subplots()
-        rects1 = ax.barh(x - width/2, y1, width, label='City Averages', color=green_shades[0])
+        fig, ax = plt.subplots(figsize=(10,7))
+        rects1 = ax.barh(x - width/2, y1, width, label='Estimated Costs', color=green_shades[0])
         rects2 = ax.barh(x + width/2, y2, width, label='Your Expenses',color=green_shades[3])
 
         # Adding labels, title, and legend
         ax.set_xlabel('Amount')
         ax.set_ylabel('Expense Categories')
-        ax.set_title('Comparison of Average Expenses vs. Your Expenses')
+        ax.set_title('Estimated Costs vs. Your Expenses')
         ax.set_yticks(x)
-        ax.set_yticklabels(['Avg. Rent', 'Avg. Transport', 'Avg. Market',
-                            'Avg. Utilities', 'Avg. Clothing', 'Avg. Leisure'])
+        ax.set_yticklabels(['Rent', 'Transport', 'Market',
+                            'Utilities', 'Clothing', 'Leisure'])
         ax.legend(loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8)
 
         plot = st.pyplot(fig)
@@ -85,17 +85,16 @@ class EstExpensesController:
         x = np.char.array(['Rent', 'Transport', 'Market', 'Utilities', 'Clothing', 'Leisure'])
         y = np.array([self.model.rent, self.model.transport, self.model.food, self.model.utilities, self.model.clothing, self.model.leisure])
 
-        porcent = 100. * y / y.sum()
+        percent = 100. * y / y.sum()
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(5, 3))
         patches, texts = ax.pie(y, colors=orange_shades, startangle=90, radius=1.2)
 
-        labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, porcent)]
+        labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
 
         ax.set_title('Distribution of Expenses', fontsize=9)
         ax.legend(patches, labels, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8)
 
         plot = st.pyplot(fig)
-
 
         self.view.render_pie_chart(plot)
