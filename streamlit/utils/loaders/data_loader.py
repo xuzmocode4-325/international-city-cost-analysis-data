@@ -5,19 +5,32 @@ import pandas as pd
 from utils.utils import base_url
 
 class DataLoader:
+    """
+    Class for loading data from a URL.
+    """
     def __init__(self, base_url=base_url):
-    	self.base_url = base_url
+        """
+        Initialize the DataLoader.
+
+        Args:
+            base_url (str, optional): The base URL. Defaults to base_url.
+        """
+        self.base_url = base_url
      
     def load_data(self):
-        """Load data from the URL."""
+        """
+        Load data from the URL.
 
+        Returns:
+            DataFrame or None: DataFrame containing city data, or None if an error occurs.
+        """
         try:
             page = requests.get(self.base_url)
             numbeo_city_soup = BeautifulSoup(page.content, "html.parser")
             results = numbeo_city_soup.find('table', class_='related_links')
             list_cities = results.find_all('a')
             city_name = lambda x: f"({x[0]}) {x[1]}" if len(x) > 2 else x[0]
-            city_dict = lambda x: {'City':city_name(x.text.split(",")), 'Country':x.text.split(",")[-1].strip(), 'Url':x["href"]}
+            city_dict = lambda x: {'City': city_name(x.text.split(",")), 'Country': x.text.split(",")[-1].strip(), 'Url': x["href"]}
             city_pages = [city_dict(city) for city in list_cities]
             df = pd.DataFrame(city_pages)
             return df
