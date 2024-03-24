@@ -1,5 +1,25 @@
 base_url = 'https://www.numbeo.com/cost-of-living/historical-data-city-selector'
 
+green_shades = [
+    "#364D23",  # Original color
+    "#4B6438",
+    "#5F7B4D",
+    "#739361",
+    "#87AA76",
+    "#9BC18A"
+]
+
+orange_shades = [
+    "#CD5229",  # Original color
+    "#D2704D",
+    "#D78F71",
+    "#DCAD95",
+    "#E1CCB9",
+    "#E6EAE0"
+]
+
+
+
 countries = ['Afghanistan', 'Albania', 'Algeria', 'Angola', 'Argentina', 'Armenia', 'Australia', 'Austria', 
 'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Bermuda', 'Bolivia', 
 'Bosnia And Herzegovina', 'Botswana', 'Brazil', 'Brunei', 'Bulgaria', 'Cambodia', 'Cameroon', 'Canada', 
