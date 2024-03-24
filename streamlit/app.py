@@ -31,7 +31,7 @@ selected_city = st.sidebar.selectbox("Select City:", selected_cities)
 city_data_controller = CityDataController(selected_city)
 
 # Define layout columns
-col1, col2 = st.columns([0.4, 0.6], gap="large")
+col1, col2 = st.columns([0.5, 0.5], gap="large")
 
 with col1:
     # Render average cost of living and input fields for expenses
@@ -43,14 +43,21 @@ with col1:
             ({country_currency[selected_country]})</p>
         </div>
     """, unsafe_allow_html=True)
+
+    st.write(f"""
+        <p style="padding: 10px;">Enter your expected monthly spend in each category below. The default values are the average spend in
+     <span style='padding: 8px; font-size: 16px; font-weight: 600;'>{selected_city}:</span></p>""", unsafe_allow_html=True)
+
+    city_data_controller = CityDataController(selected_city)
+    city_averages = city_data_controller.calculate_averages()
     
     # Input fields for each expense category
-    expenses_controller.model.rent = st.number_input('Rent:', format='%g', value=1)
-    expenses_controller.model.transport = st.number_input('Transport:', format='%g', value=1)
-    expenses_controller.model.food = st.number_input('Food:', format='%g', value=1)
-    expenses_controller.model.utilities = st.number_input('Utilities:', format='%g', value=1)
-    expenses_controller.model.clothing = st.number_input('Clothing:', format='%g', value=1)
-    expenses_controller.model.leisure = st.number_input('Leisure:', format='%g', value=1)
+    expenses_controller.model.rent = st.number_input('Rent:', format='%g', value=city_averages['Avg. Rent'])
+    expenses_controller.model.transport = st.number_input('Transport:', format='%g', value= city_averages['Avg. Transport'])
+    expenses_controller.model.food = st.number_input('Food:', format='%g', value=city_averages['Avg. Market'])
+    expenses_controller.model.utilities = st.number_input('Utilities:', format='%g', value=city_averages['Avg. Utilities'])
+    expenses_controller.model.clothing = st.number_input('Clothing:', format='%g', value= city_averages['Avg. Clothing'])
+    expenses_controller.model.leisure = st.number_input('Leisure:', format='%g', value=city_averages['Avg. Leisure'])
 
     expenses_controller.update_expenses()  # Update the budget after sliders change
 
