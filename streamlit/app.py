@@ -11,7 +11,7 @@ st.set_page_config(layout="centered")
 
 # Header
 st.markdown(
-    f"<h1 style='text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 32px;'>Personal Budget Planner</h1>", 
+    f"<h1 style='text-align: center; font-size: 32px; font-weight: 700; margin-bottom: 32px;'>💳 Personal Budget Planner</h1>", 
     unsafe_allow_html=True
 )
 
