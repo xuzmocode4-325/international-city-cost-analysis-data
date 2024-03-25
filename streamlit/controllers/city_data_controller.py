@@ -31,7 +31,7 @@ class CityDataController:
 
         # Calculate rental average
         rental = self.model.clean_data[2].astype(float).interpolate()
-        p_rent = round(rental.loc[2023].mean(), 2)
+        p_rent = round(rental.loc[2023].mean() / 2.5, 2)
 
         # Calculate public transport average
         public_transport = self.model.clean_data[3].astype(float).interpolate()
