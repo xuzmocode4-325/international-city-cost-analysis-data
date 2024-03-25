@@ -84,12 +84,17 @@ with tab1:
     expenses = '{:,.2f}'.format(expenses_controller.expenses) 
     income = '{:,.2f}'.format(user_income) 
 
-    if income > expenses:
+    if (income > expenses):
         st.success('You are below budget!', icon='🤑')
-    elif income < expenses: 
+    if (income < expenses): 
         st.error('You are over budget!', icon='😩')
-    elif income == expenses:
+    if income == expenses:
         st.warning('Your expenses exactly equal your income', icon='😑')
+
+    if (expenses > total):
+        st.info(f'Your spending is below the estimated cost-of-living for {selected_city}.', icon='🧮')
+    if (expenses < total): 
+        st.info(f'Your spending is above the estimated cost-of-living for {selected_city}.', icon='🧮')
 
     # Define layout columns
     col1, col2, col3 = st.columns([1, 1, 1], gap="large")
