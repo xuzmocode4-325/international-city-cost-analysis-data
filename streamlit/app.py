@@ -32,14 +32,6 @@ selected_city = st.sidebar.selectbox("Select City:", selected_cities)
 city_data_controller = CityDataController(selected_city)
 totals = city_data_controller.calculate_averages()
 
-# 
-
-st.write(f"""    
-    <p style='font-size: 24px;'>
-        Analysis for {selected_city}, {selected_country}
-    </p>""", unsafe_allow_html=True
-)
-
 tab1, tab2, tab3 = st.tabs(["Inputs", "Estimates Vs. Expenses", "Expense Distribution"])
 
 with tab1:
