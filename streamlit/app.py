@@ -80,15 +80,15 @@ with tab1:
         on_click=expenses_controller.update_expenses()
     )
     
-    total = totals['Avg. Total']
-    expenses = '{:,.2f}'.format(expenses_controller.expenses) 
+    total = '{:,.2f}'.format(totals['Avg. Total'])
     income = '{:,.2f}'.format(user_income) 
+    expenses = '{:,.2f}'.format(expenses_controller.expenses) 
 
     if (income > expenses):
         st.success('You are below budget!', icon='🤑')
-    if (income < expenses): 
+    elif (income < expenses): 
         st.error('You are over budget!', icon='😩')
-    if income == expenses:
+    elif income == expenses:
         st.warning('Your expenses exactly equal your income', icon='😑')
 
     if (expenses > total):
