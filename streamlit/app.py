@@ -80,21 +80,22 @@ with tab1:
         on_click=expenses_controller.update_expenses()
     )
     
-    total = totals['Avg. Total']
-    income = '{:,.2f}'.format(user_income) 
-    expenses = '{:,.2f}'.format(expenses_controller.expenses) 
+    income_formatted = '{:,.2f}'.format(user_income)
+    expenses_formatted = '{:,.2f}'.format(expenses_controller.expenses)
 
-    if (income > expenses):
-        st.success('You are below budget!', icon='🤑')
-    elif (income < expenses): 
-        st.error('You are over budget!', icon='😩')
-    elif income == expenses:
-        st.warning('Your expenses exactly equal your income', icon='😑')
+    # Check budget status
+    if user_income > expenses_controller.expenses:
+        st.success('You are below budget! 🤑')
+    elif user_income < expenses_controller.expenses:
+        st.error('You are over budget! 😩')
+    else:
+        st.warning('Your expenses exactly equal your income 😑')
 
-    if (expenses > total):
-        st.info(f'Your spending is below the estimated cost-of-living for {selected_city}.', icon='🧮')
-    if (expenses < total): 
-        st.info(f'Your spending is above the estimated cost-of-living for {selected_city}.', icon='🧮')
+    # Check spending compared to estimated cost-of-living
+    if expenses_controller.expenses > totals['Avg. Total']:
+        st.info(f'Your spending is below the estimated cost-of-living for {selected_city}. 🧮')
+    elif expenses_controller.expenses < totals['Avg. Total']:
+        st.info(f'Your spending is above the estimated cost-of-living for {selected_city}. 🧮')
 
     # Define layout columns
     col1, col2, col3 = st.columns([1, 1, 1], gap="large")
