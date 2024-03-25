@@ -84,9 +84,9 @@ with tab1:
     expenses_formatted = '{:,.2f}'.format(expenses_controller.expenses)
 
     # Check budget status
-    if user_income > expenses_controller.expenses:
+    if income_formatted > expenses_controller.expenses:
         st.success('You are below budget! 🤑')
-    elif user_income < expenses_controller.expenses:
+    elif expenses_formatted < expenses_controller.expenses:
         st.error('You are over budget! 😩')
     else:
         st.warning('Your expenses exactly equal your income 😑')
