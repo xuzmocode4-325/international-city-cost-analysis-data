@@ -86,7 +86,7 @@ with tab1:
     # Check budget status
     if income_formatted > expenses_controller.expenses:
         st.success('You are below budget! 🤑')
-    elif expenses_formatted < expenses_controller.expenses:
+    elif expenses_formatted < income_formatted:
         st.error('You are over budget! 😩')
     else:
         st.warning('Your expenses exactly equal your income 😑')
