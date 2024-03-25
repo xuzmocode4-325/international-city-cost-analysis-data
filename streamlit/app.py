@@ -80,7 +80,7 @@ with tab1:
         on_click=expenses_controller.update_expenses()
     )
     
-    total = '{:,.2f}'.format(totals['Avg. Total'])
+    total = totals['Avg. Total']
     income = '{:,.2f}'.format(user_income) 
     expenses = '{:,.2f}'.format(expenses_controller.expenses) 
 
