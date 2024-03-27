@@ -85,7 +85,7 @@ with tab1:
 
     if (expenses > total):
         st.info(f'Your spending is below the estimated cost-of-living for {selected_city}.', icon='🧮')
-    if (expenses < total): 
+    elif (expenses < total): 
         st.info(f'Your spending is above the estimated cost-of-living for {selected_city}.', icon='🧮')
 
     # Define layout columns
