@@ -73,8 +73,8 @@ with tab1:
     )
     
     total = totals['Avg. Total']
-    income = '{:,.2f}'.format(user_income) 
-    expenses = '{:,.2f}'.format(expenses_controller.expenses) 
+    income = user_income 
+    expenses = expenses_controller.expenses
 
     if (income > expenses):
         st.success('You are below budget!', icon='🤑')

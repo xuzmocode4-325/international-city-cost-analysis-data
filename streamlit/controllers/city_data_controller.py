@@ -55,5 +55,5 @@ class CityDataController:
             "Avg. Transport": p_trans,
             "Avg. Utilities": p_utils,
             "Avg. Clothing": p_cloth,
-            "Avg. Total": '{:,.2f}'.format(total)
+            "Avg. Total": total
         }
