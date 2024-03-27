@@ -22,29 +22,29 @@ class CityDataController:
 
     def calculate_averages(self):
         # Calculate market average
-        market = self.model.clean_data[0].astype(float).interpolate()
+        market = self.model.clean_data[0].astype(float).interpolate().fillna(0)
         p_mark =  round(market.iloc[0].sum() * 2, 2)
 
         # Calculate leisure average
-        leisure = self.model.clean_data[1].astype(float).interpolate()
+        leisure = self.model.clean_data[1].astype(float).interpolate().fillna(0)
         p_leis = round((leisure.iloc[0,:3].mean() + 
             (leisure.iloc[0,3] + leisure.iloc[0,4] * 4) / 2 +
             leisure.iloc[0,5]), 2)
 
         # Calculate rental average
-        rental = self.model.clean_data[2].astype(float).interpolate()
+        rental = self.model.clean_data[2].astype(float).interpolate().fillna(0)
         p_rent = round(((rental.iloc[0,2:] / 3).mean() + rental.iloc[0,:2].mean()) / 2, 2)
 
         # Calculate public transport average
-        transport = self.model.clean_data[3].astype(float).interpolate()
-        p_trans = round(transport.iloc[0,1], 2)
+        transport = self.model.clean_data[3].astype(float).interpolate().fillna(0)
+        p_trans = round(transport.iloc[0].sum() * 1.5, 2)
 
         # Calculate utilities average
-        utilities = self.model.clean_data[4].astype(float).interpolate()
-        p_utils = round(utilities.iloc[0,1:].mean(), 2)
+        utilities = self.model.clean_data[4].astype(float).interpolate().fillna(0)
+        p_utils = round(utilities.iloc[0].mean(), 2)
 
         # Calculate clothing average
-        clothing = self.model.clean_data[5].astype(float).interpolate()
+        clothing = self.model.clean_data[5].astype(float).interpolate().fillna(0)
         p_cloth = round((clothing.iloc[0,:2].sum() +
         clothing.iloc[0,2:].mean() / 4), 2)
 
