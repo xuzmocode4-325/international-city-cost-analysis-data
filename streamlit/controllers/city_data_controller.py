@@ -49,11 +49,11 @@ class CityDataController:
         clothing.iloc[0,2:].mean() / 4), 2)
 
         # Calculate total
-        total = round(p_cloth + p_utils + p_trans + p_rent + p_leis + p_mark, 2)
+        total = np.round(np.array([p_cloth, p_utils, p_trans, p_rent, p_leis, p_mark]).sum(), 2)
 
         return {
             "Avg. Market": p_mark,
-            "Avg. Leisure": p_leis,
+            "Avg. Leisure": p_leis,  
             "Avg. Rent": p_rent,
             "Avg. Transport": p_trans,
             "Avg. Utilities": p_utils,
