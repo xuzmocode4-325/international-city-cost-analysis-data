@@ -49,7 +49,7 @@ class CityDataController:
         clothing.iloc[0,2:].mean() / 4), 2)
 
         # Calculate total
-        total = p_cloth + p_utils + p_trans + p_rent + p_leis + p_mark
+        total = round(p_cloth + p_utils + p_trans + p_rent + p_leis + p_mark, 2)
 
         return {
             "Avg. Market": p_mark,
