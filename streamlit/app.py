@@ -77,11 +77,11 @@ with tab1:
     expenses = '{:,.2f}'.format(expenses_controller.expenses) 
 
     if (income > expenses):
-        st.success('You are below budget!', icon='🤑')
+        st.success('You are managing your finances well!', icon='🤑')
     elif (income < expenses): 
-        st.error('You are over budget!', icon='😩')
+        st.error('You need to cut out some expenses!', icon='😩')
     elif income == expenses:
-        st.warning('Your expenses exactly equal your income', icon='😑')
+        st.warning('You are at risk of financial mismanagment', icon='😑')
 
     if (expenses > total):
         st.info(f'Your spending is below the estimated cost-of-living for {selected_city}.', icon='🧮')
