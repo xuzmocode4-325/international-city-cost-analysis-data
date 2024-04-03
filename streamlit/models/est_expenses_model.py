@@ -1,3 +1,4 @@
+import numpy as np
 class EstExpensesModel:
     """
     Model class for calculating total estimated expenses.
@@ -30,5 +31,5 @@ class EstExpensesModel:
         Returns:
             float: The total estimated expenses.
         """
-        total_expenses = rent + transport + food + utilities + clothing + leisure
+        total_expenses = np.round(np.array([rent, transport, food, utilities, clothing, leisure]).sum(), 2)
         return total_expenses

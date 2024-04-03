@@ -73,8 +73,8 @@ with tab1:
     )
     
     total = totals['Avg. Total']
-    income = '{:,.2f}'.format(user_income) 
-    expenses = '{:,.2f}'.format(expenses_controller.expenses) 
+    income = user_income 
+    expenses = expenses_controller.expenses
 
     if (income > expenses):
         st.success('You are managing your finances well!', icon='🤑')
@@ -83,10 +83,10 @@ with tab1:
     elif income == expenses:
         st.warning('You are at risk of financial mismanagment', icon='😑')
 
-    if (expenses > total):
-        st.info(f'Your spending is below the estimated cost-of-living for {selected_city}.', icon='🧮')
-    if (expenses < total): 
-        st.info(f'Your spending is above the estimated cost-of-living for {selected_city}.', icon='🧮')
+    if (expenses < total):
+        st.info(f'Your total spend is below the estimated cost-of-living for {selected_city}.', icon='🧮')
+    elif (expenses > total): 
+        st.info(f'Your total is above the estimated cost-of-living for {selected_city}.', icon='🧮')
 
     # Define layout columns
     col1, col2, col3 = st.columns([1, 1, 1], gap="large")

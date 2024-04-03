@@ -22,38 +22,41 @@ class CityDataController:
 
     def calculate_averages(self):
         # Calculate market average
-        market = self.model.clean_data[0].astype(float).interpolate()
-        p_mark = round(market.loc[2023].sum() * 2, 2)
+        market = self.model.clean_data[0].astype(float).interpolate().fillna(0)
+        p_mark =  round(market.iloc[0].sum() * 2, 2)
 
         # Calculate leisure average
-        leisure = self.model.clean_data[1].astype(float).interpolate()
-        p_leis = round(leisure.loc[2023].sum() / 3, 2)
+        leisure = self.model.clean_data[1].astype(float).interpolate().fillna(0)
+        p_leis = round((leisure.iloc[0,:3].mean() + 
+            (leisure.iloc[0,3] + leisure.iloc[0,4] * 4) / 2 +
+            leisure.iloc[0,5]), 2)
 
         # Calculate rental average
-        rental = self.model.clean_data[2].astype(float).interpolate()
-        p_rent = round(rental.loc[2023].mean() / 2.5, 2)
+        rental = self.model.clean_data[2].astype(float).interpolate().fillna(0)
+        p_rent = round(((rental.iloc[0,2:] / 3).mean() + rental.iloc[0,:2].mean()) / 2, 2)
 
         # Calculate public transport average
-        public_transport = self.model.clean_data[3].astype(float).interpolate()
-        p_trans = public_transport.loc[2023].sum()
+        transport = self.model.clean_data[3].astype(float).interpolate().fillna(0)
+        p_trans = round(transport.iloc[0].sum() * 1.5, 2)
 
         # Calculate utilities average
-        utilities = self.model.clean_data[4].astype(float).interpolate()
-        p_utils = round(utilities.loc[2023].astype(float).sum() / 4, 2)
+        utilities = self.model.clean_data[4].astype(float).interpolate().fillna(0)
+        p_utils = round(utilities.iloc[0].mean(), 2)
 
         # Calculate clothing average
-        clothing = self.model.clean_data[5].astype(float).interpolate()
-        p_cloth = round(clothing.loc[2023].sum() / 2, 2)
+        clothing = self.model.clean_data[5].astype(float).interpolate().fillna(0)
+        p_cloth = round((clothing.iloc[0,:2].sum() +
+        clothing.iloc[0,2:].mean() / 4), 2)
 
         # Calculate total
-        total = p_cloth + p_utils + p_trans + p_rent + p_leis + p_mark
+        total = np.round(np.array([p_cloth, p_utils, p_trans, p_rent, p_leis, p_mark]).sum(), 2)
 
         return {
             "Avg. Market": p_mark,
-            "Avg. Leisure": p_leis,
+            "Avg. Leisure": p_leis,  
             "Avg. Rent": p_rent,
             "Avg. Transport": p_trans,
             "Avg. Utilities": p_utils,
             "Avg. Clothing": p_cloth,
-            "Avg. Total": '{:,.2f}'.format(total)
+            "Avg. Total": total
         }
