@@ -27,129 +27,141 @@ currency_symbol = country_currency[selected_country]
 
 selected_city = st.sidebar.selectbox("Select City:", selected_cities)
 
-# Test
 
 city_data_controller = CityDataController(selected_city)
 totals = city_data_controller.calculate_averages()
 
-tab1, tab2, tab3 = st.tabs(["Inputs", "Estimates Vs. Expenses", "Expense Distribution"])
+st.markdown(
+    f"""<p style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>
+    Get input your income and expenses to get a personal budget evaluation.
+    </p>""", 
+    unsafe_allow_html=True
+)
 
-with tab1:
 
-    # Input field for income
-    st.markdown(
+user_form = st.form("user form")
+
+# Input field for income
+
+user_form.markdown(
         f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Income</h3>", 
         unsafe_allow_html=True
     )
-    user_income = st.number_input('Current or Desired Income:', format='%g', value=0)
 
-    # Input field for income
+user_income = user_form.number_input('Current or Projected Income:', format='%g', value=0)
 
-    st.markdown(
-        f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Expenses</h3>", 
-        unsafe_allow_html=True
-    )
+# Input field for Expenses
 
-    col1, col2 = st.columns([1, 1], gap="large")
+user_form.markdown(
+    f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Expenses</h3>", 
+    unsafe_allow_html=True
+)
 
-    with col1:
 
-    # Input fields for each expense category 
-        
-        expenses_controller.model.rent = st.number_input('Rent:', format='%g', value=totals["Avg. Rent"])
-        expenses_controller.model.transport = st.number_input('Transport:', format='%g', value=totals["Avg. Transport"])
-        expenses_controller.model.food = st.number_input('Food:', format='%g', value=totals["Avg. Market"])
+col1, col2 = user_form.columns([1, 1], gap="large")
 
-    with col2:
-        expenses_controller.model.utilities = st.number_input('Utilities:', format='%g', value=totals["Avg. Utilities"])
-        expenses_controller.model.clothing = st.number_input('Clothing:', format='%g', value=totals["Avg. Clothing"])
-        expenses_controller.model.leisure = st.number_input('Leisure:', format='%g', value=totals["Avg. Leisure"])
+with col1:
 
-    st.button(
-        label="Calculate", 
-        key=None, 
-        help=None, 
-        on_click=expenses_controller.update_expenses()
-    )
+# Input fields for each expense category 
     
-    total = totals['Avg. Total']
-    income = user_income 
-    expenses = expenses_controller.expenses
+    expenses_controller.model.rent = col1.number_input('Rent:', format='%g', value=totals["Avg. Rent"])
+    expenses_controller.model.transport = col1.number_input('Transport:', format='%g', value=totals["Avg. Transport"])
+    expenses_controller.model.food = col1.number_input('Food:', format='%g', value=totals["Avg. Market"])
 
-    if (income > expenses):
-        st.success('You are managing your finances well!', icon='🤑')
-    elif (income < expenses): 
-        st.error('You need to cut out some expenses!', icon='😩')
-    elif income == expenses:
-        st.warning('You are at risk of financial mismanagment', icon='😑')
+with col2:
+    expenses_controller.model.utilities = col2.number_input('Utilities:', format='%g', value=totals["Avg. Utilities"])
+    expenses_controller.model.clothing = col2.number_input('Clothing:', format='%g', value=totals["Avg. Clothing"])
+    expenses_controller.model.leisure = col2.number_input('Leisure:', format='%g', value=totals["Avg. Leisure"])
 
-    if (expenses < total):
-        st.info(f'Your total spend is below the estimated cost-of-living for {selected_city}.', icon='🧮')
-    elif (expenses > total): 
-        st.info(f'Your total is above the estimated cost-of-living for {selected_city}.', icon='🧮')
+user_form.form_submit_button(
+    label="Calculate", 
+    on_click=expenses_controller.update_expenses()
+)
 
-    # Define layout columns
-    col1, col2, col3 = st.columns([1, 1, 1], gap="large")
+total = totals['Avg. Total']
+income = user_income 
+expenses = expenses_controller.expenses
 
-    with col1:
-        # Render average cost of living and input fields for expenses
-        
-        st.write(f"""
-            <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 5px 0px; padding: 10px; width:100%;'> 
-                <p style='padding: 8px; font-size: 18px; font-weight: 600;'>Estimated Costs:</p>
-                <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>
-                    {currency_symbol}    
-                    {total}
-                </p>
-            </div>
-        """, unsafe_allow_html=True
-    )
+st.write(f"""    
+<p style='font-size: 24px;'>
+    Analysis for {selected_city}, {selected_country}
+</p>""", unsafe_allow_html=True
+)
+
+if (income > expenses):
+    st.success('You are managing your finances well!', icon='🤑')
+elif (income < expenses): 
+    st.error('You need to cut out some expenses!', icon='😩')
+elif income == expenses:
+    st.warning('You are at risk of financial mismanagment', icon='😑')
+
+if (expenses < total):
+    st.info(f'Your total spend is below the estimated cost-of-living for {selected_city}.', icon='🧮')
+elif (expenses > total): 
+    st.info(f'Your total is above the estimated cost-of-living for {selected_city}.', icon='🧮')
 
 
-    with col2:
-        # Render user's expenses
-        
-        st.write(f"""
-            <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 5px 0px; padding: 10px; width:100%;'>
-                <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Expenses:</p>
-                <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>
-                    {currency_symbol}    
-                    {expenses}
-                </p>
-            </div>
-        """, unsafe_allow_html=True
-    )
 
-    with col3:
-        # Render user's income
-        
-        st.write(f"""
-            <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 5px 0px; padding: 10px; width:100%;'>
-                <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Income:</p>
-                <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>  
-                    {currency_symbol}    
-                    {income}
-                </p>
-            </div>
-        """, unsafe_allow_html=True
-    )
-        
+# Define layout columns
+col1, col2, col3 = st.columns([1, 1, 1], gap="small")
+
+with col1:
+    # Render average cost of living and input fields for expenses
     
+    st.write(f"""
+        <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 2px 0px; padding: 5px; width:100%;'> 
+            <p style='padding: 8px; font-size: 18px; font-weight: 600;'>Estimated Costs:</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>
+                {currency_symbol}    
+                {total}
+            </p>
+        </div>
+    """, unsafe_allow_html=True
+)
 
-with tab2:
-    st.write(f"""    
-    <p style='font-size: 24px;'>
-        Analysis for {selected_city}, {selected_country}
-    </p>""", unsafe_allow_html=True
-    )
-    # Render side-by-side horizontal bar chart
-    expenses_controller.plot_side_side_hbar(selected_city)
 
-with tab3:
-    st.write(f"""    
-    <p style='font-size: 24px;'>
-        Analysis for {selected_city}, {selected_country}
-    </p>""", unsafe_allow_html=True
-    )
-    # Render pie chart
-    expenses_controller.plot_pie_chart()
+with col2:
+    # Render user's expenses
+    
+    st.write(f"""
+        <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 2px 0px; padding: 5px; width:100%;'>
+            <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Expenses:</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>
+                {currency_symbol}    
+                {expenses}
+            </p>
+        </div>
+    """, unsafe_allow_html=True
+)
+
+with col3:
+    # Render user's income
+    
+    st.write(f"""
+        <div style='border: 1px solid #e0e0e0; border-radius: 8px; margin: 2px 0px; padding: 5px; width:100%;'>
+            <p style='padding: 8px; font-size: 16px; font-weight: 600;'>Your Income:</p>
+            <p style='padding: 8px;  padding-bottom: 0px;  font-size: 21px;'>  
+                {currency_symbol}    
+                {income}
+            </p>
+        </div>
+    """, unsafe_allow_html=True
+)
+
+st.write(f"""    
+<p style='font-size: 18px; margin-top: 10px;'>
+    Estimated Costs vs Personal Expenses
+</p>""", unsafe_allow_html=True
+)
+
+# Render side-by-side horizontal bar chart
+expenses_controller.plot_side_side_hbar(selected_city)
+
+st.write(f"""    
+<p style='font-size: 18px; margin-top: 10px;'>
+    Distribution of Personal Expenses Across Cost Categories 
+</p>""", unsafe_allow_html=True
+)
+
+# Render pie chart
+expenses_controller.plot_pie_chart()
