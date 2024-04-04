@@ -57,21 +57,26 @@ class EstExpensesController:
         x = np.arange(len(y1))
 
         # Define width of bars
-        width = 0.35
+        width = 0.4
 
         # Plotting the side-by-side horizontal bar chart
-        fig, ax = plt.subplots(figsize=(10,7))
-        rects1 = ax.barh(x - width/2, y1, width, label='Estimated Costs', color=green_shades[0])
-        rects2 = ax.barh(x + width/2, y2, width, label='Your Expenses',color=green_shades[3])
+        fig, ax = plt.subplots(figsize=(10, 30))
+        ax.set_frame_on(False)
+        # Plot the first set of bars (Estimated Costs)
+        rects1 = ax.bar(x - width/2, y1, width, label='Estimated Costs', color=green_shades[0])
+        # Plot the second set of bars (Personal Expenses)
+        rects2 = ax.bar(x + width/2, y2, width, label='Personal Expenses', color=green_shades[3])
+
+        # Add labels, title, and legend
 
         # Adding labels, title, and legend
-        ax.set_xlabel('Amount')
-        ax.set_ylabel('Expense Categories')
-        ax.set_title('Estimated Costs vs. Your Expenses')
-        ax.set_yticks(x)
-        ax.set_yticklabels(['Rent', 'Transport', 'Market',
+        ax.set_ylabel('Amount')
+        ax.set_xlabel('Categories')
+        #ax.set_title('Estimated Costs vs. Your Expenses')
+        ax.set_xticks(x)
+        ax.set_xticklabels(['Rent', 'Transport', 'Food',
                             'Utilities', 'Clothing', 'Leisure'])
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8)
+        fig.legend(loc='center right',  bbox_to_anchor=(1, 0, 0.5, 1), fontsize=20, frameon=False)
 
         plot = st.pyplot(fig)
 
@@ -82,18 +87,18 @@ class EstExpensesController:
         Plot a pie chart of estimated expenses.
         """
 
-        x = np.char.array(['Rent', 'Transport', 'Market', 'Utilities', 'Clothing', 'Leisure'])
+        x = np.char.array(['Rent', 'Transport', 'Food', 'Utilities', 'Clothing', 'Leisure'])
         y = np.array([self.model.rent, self.model.transport, self.model.food, self.model.utilities, self.model.clothing, self.model.leisure])
 
         percent = 100. * y / y.sum()
 
-        fig, ax = plt.subplots(figsize=(5, 3))
+        fig, ax = plt.subplots(figsize=(10, 30))
         patches, texts = ax.pie(y, colors=orange_shades, startangle=90, radius=1.2)
 
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
 
-        ax.set_title('Distribution of Expenses', fontsize=9)
-        ax.legend(patches, labels, loc='center left', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8)
+        #ax.set_title('Distribution of Expenses', fontsize=9)
+        ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8, frameon=False)
 
         plot = st.pyplot(fig)
 
