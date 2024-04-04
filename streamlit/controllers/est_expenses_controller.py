@@ -8,6 +8,9 @@ from controllers.city_data_controller import CityDataController
 
 from utils.utils import green_shades, orange_shades
 
+plt.rc('xtick', labelsize=21)  
+plt.rc('ytick', labelsize=21)
+
 class EstExpensesController:
     """
     Controller class for managing estimated expenses.
@@ -60,26 +63,26 @@ class EstExpensesController:
         width = 0.4
 
         # Plotting the side-by-side horizontal bar chart
-        fig, ax = plt.subplots(figsize=(10, 30))
+        fig, ax = plt.subplots(figsize=(15, 10))
+        ax.margins(tight=True)
         ax.set_frame_on(False)
+
         # Plot the first set of bars (Estimated Costs)
         rects1 = ax.bar(x - width/2, y1, width, label='Estimated Costs', color=green_shades[0])
         # Plot the second set of bars (Personal Expenses)
         rects2 = ax.bar(x + width/2, y2, width, label='Personal Expenses', color=green_shades[3])
 
-        # Add labels, title, and legend
-
         # Adding labels, title, and legend
-        ax.set_ylabel('Amount')
-        ax.set_xlabel('Categories')
+        ax.set_ylabel('Amount', fontdict={'fontsize': 24, 'fontweight': 'medium'})
+        ax.set_xlabel('Categories',  fontdict={'fontsize': 24, 'fontweight': 'medium'})
+
         #ax.set_title('Estimated Costs vs. Your Expenses')
         ax.set_xticks(x)
         ax.set_xticklabels(['Rent', 'Transport', 'Food',
                             'Utilities', 'Clothing', 'Leisure'])
-        fig.legend(loc='center right',  bbox_to_anchor=(1, 0, 0.5, 1), fontsize=20, frameon=False)
+        ax.legend(loc='center right',  bbox_to_anchor=(1, 0, 0.5, 1), fontsize=24, frameon=False)
 
         plot = st.pyplot(fig)
-
         self.view.render_horizontal_bar_chart(plot)
 
     def plot_pie_chart(self):
@@ -92,14 +95,15 @@ class EstExpensesController:
 
         percent = 100. * y / y.sum()
 
-        fig, ax = plt.subplots(figsize=(10, 30))
+        fig, ax = plt.subplots(figsize=(15, 9))
+        ax.margins(tight=True)
+
         patches, texts = ax.pie(y, colors=orange_shades, startangle=90, radius=1.2)
 
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
 
         #ax.set_title('Distribution of Expenses', fontsize=9)
-        ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=8, frameon=False)
+        ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
 
         plot = st.pyplot(fig)
-
         self.view.render_pie_chart(plot)
