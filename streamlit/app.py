@@ -32,8 +32,9 @@ city_data_controller = CityDataController(selected_city)
 totals = city_data_controller.calculate_averages()
 
 st.markdown(
-    f"""<p style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>
-    Get input your income and expenses to get a personal budget evaluation.
+    f"""<p style='text-align: left; font-size: 24px; font-weight: 400; margin: 5px;'>
+    Thinking of relocating cities but not sure if you will be able to afford the cost of living expenses? 
+    Input your income and expenses to get a personal budget evaluation.
     </p>""", 
     unsafe_allow_html=True
 )
