@@ -32,9 +32,12 @@ city_data_controller = CityDataController(selected_city)
 totals = city_data_controller.calculate_averages()
 
 st.markdown(
-    f"""<p style='text-align: left; font-size: 24px; font-weight: 400; margin: 5px;'>
-    Thinking of relocating cities but not sure if you will be able to afford the cost of living expenses? 
-    Input your income and expenses to get a personal budget evaluation.
+    f"""<p style='text-align: left; font-size: 18px; font-weight: 400; margin: 20px 0;'>
+    Thinking of relocating cities? Want to be sure that you will be able to afford the cost of living expenses? 
+    This is the app for you! 
+    <br><br>
+    Get accurate estimates on common expenses. 
+    Simply input your income and expenses data in the form below for budget recommendations.  <br>
     </p>""", 
     unsafe_allow_html=True
 )
@@ -45,7 +48,7 @@ user_form = st.form("user form")
 # Input field for income
 
 user_form.markdown(
-        f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Income</h3>", 
+        f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Monthly Income</h3>", 
         unsafe_allow_html=True
     )
 
@@ -54,7 +57,7 @@ user_income = user_form.number_input('Current or Projected Income:', format='%g'
 # Input field for Expenses
 
 user_form.markdown(
-    f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Expenses</h3>", 
+    f"<h3 style='text-align: left; font-size: 18px; font-weight: 700; margin-bottom: 5px;'>Monthly Expenses</h3>", 
     unsafe_allow_html=True
 )
 
