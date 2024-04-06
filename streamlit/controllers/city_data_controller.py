@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+from io import StringIO
 
 from models.city_data_model import CityDataModel
 

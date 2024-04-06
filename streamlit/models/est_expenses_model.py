@@ -3,20 +3,22 @@ class EstExpensesModel:
     """
     Model class for calculating total estimated expenses.
     """
-
+    ["restaurants", "markets", "leisure", "rent_per_month", "transport", "utilities", "clothing"]
     def __init__(self):
         """
         Initialize the EstExpensesModel.
         """
         self.budget = None
+        self.restaurant = None
+        self.market = None
+        self.leisure = None
         self.rent = None
         self.transport = None
-        self.food = None
         self.utilities = None
         self.clothing = None
-        self.leisure = None
+      
 
-    def calculate_total_expenses(self, rent, transport, food, utilities, clothing, leisure):
+    def calculate_total_expenses(self, restaurant, market, leisure, rent,  transport, utilities, clothing):
         """
         Calculate the total estimated expenses.
 
@@ -31,5 +33,5 @@ class EstExpensesModel:
         Returns:
             float: The total estimated expenses.
         """
-        total_expenses = np.round(np.array([rent, transport, food, utilities, clothing, leisure]).sum(), 2)
+        total_expenses = np.round(np.array([restaurant, market, leisure, rent,  transport, utilities, clothing]).sum(), 2)
         return total_expenses

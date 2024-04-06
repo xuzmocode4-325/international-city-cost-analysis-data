@@ -28,8 +28,10 @@ class EstExpensesController:
         Calculate the total estimated expenses.
         """
         total_expenses = self.model.calculate_total_expenses(
-            self.model.rent, self.model.transport, self.model.food, self.model.utilities,
-            self.model.clothing, self.model.leisure
+            self.model.restaurant, self.model.rent, 
+            self.model.transport, self.model.market, 
+            self.model.utilities, self.model.clothing, 
+            self.model.leisure
         )
         self.expenses = total_expenses
 
@@ -90,8 +92,8 @@ class EstExpensesController:
         Plot a pie chart of estimated expenses.
         """
 
-        x = np.char.array(['Rent', 'Transport', 'Food', 'Utilities', 'Clothing', 'Leisure'])
-        y = np.array([self.model.rent, self.model.transport, self.model.food, self.model.utilities, self.model.clothing, self.model.leisure])
+        x = np.char.array(['Restaurants', 'Rent', 'Transport', 'Food', 'Utilities', 'Clothing', 'Leisure'])
+        y = np.array([self.model.restaurant, self.model.rent, self.model.transport, self.model.market, self.model.utilities, self.model.clothing, self.model.leisure])
 
         percent = 100. * y / y.sum()
 
