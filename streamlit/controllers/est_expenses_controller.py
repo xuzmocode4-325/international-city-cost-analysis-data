@@ -49,14 +49,20 @@ class EstExpensesController:
             city (str): The name of the city to plot expenses for.
         """
         city_data_controller = CityDataController(city)
-        city_averages = city_data_controller.calculate_averages()
+        city_estimates = city_data_controller.calculate_averages()
 
         # Extracting y1 and y2 data
-        y1 = [city_averages['Avg. Rent'], city_averages['Avg. Transport'],
-              city_averages['Avg. Market'], city_averages['Avg. Utilities'],
-              city_averages['Avg. Clothing'], city_averages['Avg. Leisure']]
-        y2 = [self.model.rent, self.model.transport, self.model.food,
-              self.model.utilities, self.model.clothing, self.model.leisure]
+        y1 = [
+            city_estimates["est_restaurant"], 
+            city_estimates["est_rent"],
+            city_estimates["est_transport"],
+            city_estimates["est_market"],
+            city_estimates["est_utilities"], 
+            city_estimates["est_clothing"], 
+            city_estimates["est_leisure"],
+        ]
+        y2 = [self.model.rent, self.model.transport, self.model.market,
+              self.model.utilities, self.model.clothing, self.model.leisure, self.model.restaurant]
 
         # Define x values
         x = np.arange(len(y1))
@@ -80,8 +86,7 @@ class EstExpensesController:
 
         #ax.set_title('Estimated Costs vs. Your Expenses')
         ax.set_xticks(x)
-        ax.set_xticklabels(['Rent', 'Transport', 'Food',
-                            'Utilities', 'Clothing', 'Leisure'])
+        ax.set_xticklabels(['Restaurants', 'Rent', 'Transport', 'Market', 'Utilities', 'Clothing', 'Leisure'])
         ax.legend(loc='center right',  bbox_to_anchor=(1, 0, 0.5, 1), fontsize=24, frameon=False)
 
         plot = st.pyplot(fig)
@@ -92,7 +97,7 @@ class EstExpensesController:
         Plot a pie chart of estimated expenses.
         """
 
-        x = np.char.array(['Restaurants', 'Rent', 'Transport', 'Food', 'Utilities', 'Clothing', 'Leisure'])
+        x = np.char.array(['Restaurants', 'Rent', 'Transport', 'Market', 'Utilities', 'Clothing', 'Leisure'])
         y = np.array([self.model.restaurant, self.model.rent, self.model.transport, self.model.market, self.model.utilities, self.model.clothing, self.model.leisure])
 
         percent = 100. * y / y.sum()
