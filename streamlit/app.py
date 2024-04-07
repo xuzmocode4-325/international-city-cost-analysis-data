@@ -86,7 +86,7 @@ with col1a:
 
 with col2a: 
     rent_value = col2a.number_input('Rent Value', format='%g', 
-        value=0.0, step=1000.00)
+        value=totals["est_rent"], step=1000.00)
 
 # Input Field For Market Expenses
 user_form.subheader(f"""Monthly Market Expenses""")
@@ -140,25 +140,25 @@ with col1b:
         value=market_rec.get('Cigarettes 20 Pack (Marlboro)', 0.0), step=10.0)
 
 with col2b:
-    milk_qty = col2b.number_input("Quantity", key='mlk', format="%d", value=0, step=1)
-    loaf_qty = col2b.number_input("Quantity", key='lwb', format="%d", value=0, step=1)
-    eggs_qty = col2b.number_input("Quantity", key='dre', format="%d", value=0, step=1)
-    water_qty = col2b.number_input("Quantity", key='wbb', format="%d", value=0, step=1)
-    apples_qty = col2b.number_input("Quantity", key='apk', format="%d", value=0, step=1)
-    oranges_qty = col2b.number_input("Quantity", key='ogk', format="%d", value=0, step=1)
-    potato_qty = col2b.number_input("Quantity", key='ptk', format="%d", value=0, step=1)
-    lettuce_qty = col2b.number_input("Quantity", key='lth', format="%d", value=0, step=1)
-    rice_qty = col2b.number_input("Quantity", key='wrk', format="%d", value=0, step=1)
-    tomato_qty = col2b.number_input("Quantity", key='tmk', format="%d", value=0, step=1)
-    banana_qty = col2b.number_input("Quantity", key='bnk', format="%d", value=0, step=1)
-    onion_qty = col2b.number_input("Quantity", key='nok', format="%d", value=0, step=1)
-    cheese_qty = col2b.number_input("Quantity", key='chk', format="%d", value=0, step=1)
-    wine_qty = col2b.number_input("Quantity", key='wbq', format="%d", value=0, step=1)
-    chicken_qty = col2b.number_input("Quantity", key='cfk', format="%d", value=0, step=1)
-    beef_qty = col2b.number_input("Quantity", key='bfk', format="%d", value=0, step=1)
-    domestic_qty = col2b.number_input("Quantity", key='dbf', format="%d", value=0, step=1)
-    import_qty = col2b.number_input("Quantity", key='ibf', format="%d", value=0, step=1)
-    cigs_qty = col2b.number_input("Quantity", key='c20', format="%d", value=0, step=1)
+    milk_qty = col2b.number_input("Quantity", key='mlk', format="%d", value=2, step=1)
+    loaf_qty = col2b.number_input("Quantity", key='lwb', format="%d", value=2, step=1)
+    eggs_qty = col2b.number_input("Quantity", key='dre', format="%d", value=2, step=1)
+    water_qty = col2b.number_input("Quantity", key='wbb', format="%d", value=2, step=1)
+    apples_qty = col2b.number_input("Quantity", key='apk', format="%d", value=2, step=1)
+    oranges_qty = col2b.number_input("Quantity", key='ogk', format="%d", value=2, step=1)
+    potato_qty = col2b.number_input("Quantity", key='ptk', format="%d", value=2, step=1)
+    lettuce_qty = col2b.number_input("Quantity", key='lth', format="%d", value=2, step=1)
+    rice_qty = col2b.number_input("Quantity", key='wrk', format="%d", value=2, step=1)
+    tomato_qty = col2b.number_input("Quantity", key='tmk', format="%d", value=2, step=1)
+    banana_qty = col2b.number_input("Quantity", key='bnk', format="%d", value=2, step=1)
+    onion_qty = col2b.number_input("Quantity", key='nok', format="%d", value=2, step=1)
+    cheese_qty = col2b.number_input("Quantity", key='chk', format="%d", value=2, step=1)
+    wine_qty = col2b.number_input("Quantity", key='wbq', format="%d", value=2, step=1)
+    chicken_qty = col2b.number_input("Quantity", key='cfk', format="%d", value=2, step=1)
+    beef_qty = col2b.number_input("Quantity", key='bfk', format="%d", value=2, step=1)
+    domestic_qty = col2b.number_input("Quantity", key='dbf', format="%d", value=2, step=1)
+    import_qty = col2b.number_input("Quantity", key='ibf', format="%d", value=2, step=1)
+    cigs_qty = col2b.number_input("Quantity", key='c20', format="%d", value=2, step=1)
 
 market_total = np.round(np.array([
     milk * milk_qty, loaf * loaf_qty, eggs * eggs_qty, water * water_qty, 
@@ -189,8 +189,8 @@ with col1c:
         value=leisure_rec.get('Cinema, International Release, 1 Seat', 0.0), step=100.0)
 
 with col2c: 
-    sports_freq = col2c.number_input("Visits Per Month", key='scv', format="%d", value=0, step=1, max_value=4)
-    movies_freq = col2c.number_input("Visits Per Month", key='cmv', format="%d", value=0, step=1)
+    sports_freq = col2c.number_input("Visits Per Month", key='scv', format="%d", value=1, step=1, max_value=4)
+    movies_freq = col2c.number_input("Visits Per Month", key='cmv', format="%d", value=1, step=1)
 
 leisure_total = np.round(np.array([fitness, sports * sports_freq, movies * movies_freq]).sum(), 2)
 
