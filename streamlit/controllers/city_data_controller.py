@@ -51,7 +51,7 @@ class CityDataController:
             transport.iloc[0:1,3:].sum().sum() + 
             transport.iloc[0:1,2:3].sum().sum() * 30 + 
             transport.iloc[0:1,1:2].sum().sum() * 44 ) / 3, 
-        )
+        2)
         
         #utilities estimate
         utilities = self.model.clean_data[5]

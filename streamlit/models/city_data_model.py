@@ -84,7 +84,7 @@ class CityDataModel:
             interpolated_data = data_to_interpolate.astype(float).interpolate(method='linear')
 
             # Step 4: Replace the original columns with interpolated data
-            frame[interpolate_columns] = interpolated_data
+            frame[interpolate_columns] = interpolated_data.fillna(0)
 
             # Step 5: Append the modified frame to the list of new frames
             new_frames.append(frame)

@@ -8,7 +8,7 @@ class EstExpensesView:
     """
 
     @staticmethod
-    def render_horizontal_bar_chart(fig):
+    def render_bar_chart(fig):
         """
         Render a horizontal bar chart based on provided data.
 

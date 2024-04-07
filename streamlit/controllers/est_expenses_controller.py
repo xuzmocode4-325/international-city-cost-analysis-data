@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 
@@ -41,7 +42,7 @@ class EstExpensesController:
         """
         self.calculate_estimated_expenses()
 
-    def plot_side_side_hbar(self, city):
+    def plot_side_side_bar(self, city):
         """
         Plot a side-by-side horizontal bar chart of estimated expenses.
 
@@ -61,8 +62,8 @@ class EstExpensesController:
             city_estimates["est_clothing"], 
             city_estimates["est_leisure"],
         ]
-        y2 = [self.model.rent, self.model.transport, self.model.market,
-              self.model.utilities, self.model.clothing, self.model.leisure, self.model.restaurant]
+        y2 = [self.model.restaurant, self.model.rent, self.model.transport, self.model.market,
+              self.model.utilities, self.model.clothing, self.model.leisure]
 
         # Define x values
         x = np.arange(len(y1))
@@ -78,7 +79,7 @@ class EstExpensesController:
         # Plot the first set of bars (Estimated Costs)
         rects1 = ax.bar(x - width/2, y1, width, label='Estimated Costs', color=green_shades[0])
         # Plot the second set of bars (Personal Expenses)
-        rects2 = ax.bar(x + width/2, y2, width, label='Personal Expenses', color=green_shades[3])
+        rects2 = ax.bar(x + width/2, y2, width, label='Personal Expenses', color=green_shades[4])
 
         # Adding labels, title, and legend
         ax.set_ylabel('Amount', fontdict={'fontsize': 24, 'fontweight': 'medium'})
@@ -90,7 +91,7 @@ class EstExpensesController:
         ax.legend(loc='center right',  bbox_to_anchor=(1, 0, 0.5, 1), fontsize=24, frameon=False)
 
         plot = st.pyplot(fig)
-        self.view.render_horizontal_bar_chart(plot)
+        self.view.render_bar_chart(plot)
 
     def plot_pie_chart(self):
         """
@@ -98,9 +99,10 @@ class EstExpensesController:
         """
 
         x = np.char.array(['Restaurants', 'Rent', 'Transport', 'Market', 'Utilities', 'Clothing', 'Leisure'])
-        y = np.array([self.model.restaurant, self.model.rent, self.model.transport, self.model.market, self.model.utilities, self.model.clothing, self.model.leisure])
-
-        percent = 100. * y / y.sum()
+        y = pd.Series([self.model.restaurant, self.model.rent, self.model.transport, 
+            self.model.market, self.model.utilities, self.model.clothing, 
+            self.model.leisure]).fillna(0)
+        percent = y / y.sum() * 100 
 
         fig, ax = plt.subplots(figsize=(15, 9))
         ax.margins(tight=True)
