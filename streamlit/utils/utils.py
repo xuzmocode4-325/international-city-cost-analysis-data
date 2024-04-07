@@ -1,21 +1,23 @@
 base_url = 'https://www.numbeo.com/cost-of-living/historical-data-city-selector'
 
 green_shades = [
-    "#364D23",  # Original color
-    "#4B6438",
-    "#5F7B4D",
-    "#739361",
-    "#87AA76",
-    "#9BC18A"
+    "#314026", 
+    "#526a40",
+    "#739559",
+    "#94bf73",
+    "#b5ea8c",
+    "#daf5c6",
+    "#edfae3",
 ]
 
 orange_shades = [
-    "#CD5229",  # Original color
-    "#D2704D",
-    "#D78F71",
-    "#DCAD95",
-    "#E1CCB9",
-    "#E6EAE0"
+    "#787878", # Original Orange
+    "#e8e8e8",
+    "#ecc9a8",
+    "#f0a967",
+    "#e87f54",
+    "#df5441",
+    "#363636",
 ]
 
 

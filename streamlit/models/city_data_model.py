@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
+from io import StringIO
 
 from utils.loaders.data_loader import DataLoader
 from utils.utils import base_url
@@ -33,7 +34,6 @@ class CityDataModel:
         Returns:
             list: A list of tables containing city data.
         """
-        from io import StringIO
         page = requests.get(self.df.iloc[self.df.loc[self.df['City'] == self.city].index[0]]["Url"])
         one_city_soup = BeautifulSoup(page.content, "html.parser")
         inner_width = one_city_soup.find_all('div', class_='innerWidth')
@@ -47,17 +47,22 @@ class CityDataModel:
         Returns:
             list: A list of categorized data frames.
         """
-        from io import StringIO
         reader_converter = lambda x: pd.DataFrame(pd.read_html(StringIO(str(x)))[0])
         df_list = [reader_converter(table) for table in self.tables]
-        market = pd.concat([df_list[2], df_list[3], df_list[4]], axis=1).T.drop_duplicates().T
-        leisure = pd.concat([df_list[0], df_list[12]], axis=1).T.drop_duplicates().T
-        rental = df_list[5]
-        public_transport = df_list[9]
+
+        # Categorize different types of data
+        restaurants = pd.concat([df_list[0], df_list[1]], axis=1).T.drop_duplicates().T
+        markets = pd.concat([df_list[2], df_list[3], df_list[4]], axis=1).T.drop_duplicates().T
+        transport = pd.concat([df_list[8], df_list[9]], axis=1).T.drop_duplicates().T
+        rent_per_month = df_list[5]
         utilities = df_list[11]
+        leisure = df_list[12]
         clothing = df_list[13]
-        category_frames = [market, leisure, rental, public_transport, utilities, clothing]
-        return [frame.set_index("Year") for frame in category_frames]
+
+        # Collect categorized frames into a list
+        categorized_frames = [restaurants, markets, leisure, rent_per_month, transport, utilities, clothing]
+
+        return categorized_frames
 
     def clean_data(self):
         """
@@ -67,7 +72,21 @@ class CityDataModel:
             list: A list of cleaned data frames.
         """
         frames = self.categories
+        new_frames = []
         for frame in frames:
-            frame.replace({'-': np.nan}, inplace=True)
-            frame = frame.astype(float).infer_objects(copy=False)
-        return frames
+            # Step 1: Identify columns to interpolate excluding 'Year'
+            interpolate_columns = frame.columns[frame.columns != 'Year']
+
+            # Step 2: Extract the subset of data to interpolate
+            data_to_interpolate = frame[interpolate_columns].replace(to_replace="-", value=np.nan)
+
+            # Step 3: Perform interpolation
+            interpolated_data = data_to_interpolate.astype(float).interpolate(method='linear')
+
+            # Step 4: Replace the original columns with interpolated data
+            frame[interpolate_columns] = interpolated_data.fillna(0)
+
+            # Step 5: Append the modified frame to the list of new frames
+            new_frames.append(frame)
+
+        return new_frames
