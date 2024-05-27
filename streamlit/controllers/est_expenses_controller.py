@@ -114,7 +114,7 @@ class EstExpensesController:
         patches, texts = ax.pie(np.round(percent), labels=labels, colors=orange_shades, startangle=90, radius=1.2)
 
         #ax.set_title('Distribution of Expenses', fontsize=9)
-        ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
+        ax.legend(patches, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
         ax.axis('equal')
 
         plot = st.pyplot(fig)
