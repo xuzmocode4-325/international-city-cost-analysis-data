@@ -34,6 +34,6 @@ class EstExpensesModel:
             float: The total estimated expenses.
         """
         totals_array = np.array([restaurant, market, leisure, rent,  transport, utilities, clothing])
-        totals_cleaned = totals_array[~np.isnan(totals_array)]
+        totals_cleaned = totals_array[np.isnan(totals_array)] = 0
         total_expenses = np.round(totals_cleaned.sum(), 2)
         return total_expenses
