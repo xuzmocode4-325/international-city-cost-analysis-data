@@ -219,7 +219,7 @@ with col1d:
     one_meal = col1d.number_input('Inexpensive Restaurant Meal for One', 
         value=restaurant_rec.get('Meal, Inexpensive Restaurant', 0.0), step=100.0, **input_kwargs)
     duo_meal = col1d.number_input('Three Course Meal for Two at a Mid-range Restaurant', 
-        value=restaurant_rec.get('Meal for 2 People, Mid-range Restaurant, Three-course', 0), step=100.0, **input_kwargs)
+        value=restaurant_rec.get('Meal for 2 People, Mid-range Restaurant, Three-course', 0.0), step=100.0, **input_kwargs)
     combo = col1d.number_input('Fast Food Combo Meal', 
         value=restaurant_rec.get('McMeal at McDonalds (or Equivalent Combo Meal)', 0.0), step=50.0, **input_kwargs)
     fizzy_drink = col1d.number_input('Fizzy Drink 330ml', 
