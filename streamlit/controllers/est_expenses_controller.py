@@ -103,13 +103,13 @@ class EstExpensesController:
             self.model.market, self.model.utilities, self.model.clothing, 
             self.model.leisure])
         y[np.isnan(y)] = 0
+        print(y)
         percent = y / y.sum() * 100 
-        y = y.astype(int)
 
         fig, ax = plt.subplots(figsize=(15, 9))
         ax.margins(tight=True)
 
-        patches, texts = ax.pie(y, colors=orange_shades, startangle=90, radius=1.2, shadow=True)
+        patches, texts = ax.pie(percent, colors=orange_shades, startangle=90, radius=1.2, shadow=True)
 
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
 
