@@ -102,9 +102,10 @@ class EstExpensesController:
         y = np.array([self.model.restaurant, self.model.rent, self.model.transport, 
             self.model.market, self.model.utilities, self.model.clothing, 
             self.model.leisure])
-        y[np.isnan(y)] = 0
+        y = np.nan_to_num(y, nan=0)
         print(y)
         percent = y / y.sum() * 100 
+        percent = np.nan_to_num(percent, nan=0)
 
         fig, ax = plt.subplots(figsize=(15, 9))
         ax.margins(tight=True)
@@ -114,6 +115,7 @@ class EstExpensesController:
 
         #ax.set_title('Distribution of Expenses', fontsize=9)
         ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
+        ax.axis('equal')
 
         plot = st.pyplot(fig)
         self.view.render_pie_chart(plot)
