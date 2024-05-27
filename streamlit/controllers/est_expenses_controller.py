@@ -102,7 +102,7 @@ class EstExpensesController:
         y = np.array([self.model.restaurant, self.model.rent, self.model.transport, 
             self.model.market, self.model.utilities, self.model.clothing, 
             self.model.leisure])
-        y[np.isnan(y)] = 0
+        y[np.isnan(y)] = 0.0
         percent = y / y.sum() * 100 
 
         fig, ax = plt.subplots(figsize=(15, 9))
