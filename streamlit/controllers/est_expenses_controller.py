@@ -111,7 +111,7 @@ class EstExpensesController:
         ax.margins(tight=True)
 
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
-        patches, texts = ax.pie(np.round(percent), autopct='%1.1f%%', colors=orange_shades, startangle=90, radius=1.2)
+        patches, texts = ax.pie(np.round(percent), colors=orange_shades, startangle=90, radius=1.2)
 
         #ax.set_title('Distribution of Expenses', fontsize=9)
         ax.legend(patches, labels, loc='best', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
