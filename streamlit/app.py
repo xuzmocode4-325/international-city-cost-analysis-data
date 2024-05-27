@@ -413,4 +413,7 @@ st.write(f"""
 )
 
 # Render pie chart
-expenses_controller.plot_pie_chart()
+try:
+    expenses_controller.plot_pie_chart()
+except:
+   st.error('An bug is preventing this part of the code from running', icon='🚧')
