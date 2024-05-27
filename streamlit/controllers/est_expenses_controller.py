@@ -109,7 +109,7 @@ class EstExpensesController:
         fig, ax = plt.subplots(figsize=(15, 9))
         ax.margins(tight=True)
 
-        patches, texts = ax.pie(percent, colors=orange_shades, startangle=90, radius=1.2, shadow=True)
+        patches, texts = ax.pie(percent, colors=orange_shades, startangle=90, radius=1.2)
 
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
 

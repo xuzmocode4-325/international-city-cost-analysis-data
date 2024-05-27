@@ -78,7 +78,7 @@ class CityDataModel:
             interpolate_columns = frame.columns[frame.columns != 'Year']
 
             # Step 2: Extract the subset of data to interpolate
-            data_to_interpolate = frame[interpolate_columns].replace(to_replace="-", value=np.nan)
+            data_to_interpolate = frame[interpolate_columns].replace(to_replace="-", value=np.nan).infer_objects(copy=False)
 
             # Step 3: Perform interpolation
             interpolated_data = data_to_interpolate.astype(float).interpolate(method='linear')
