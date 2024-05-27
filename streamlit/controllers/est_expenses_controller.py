@@ -109,9 +109,8 @@ class EstExpensesController:
         fig, ax = plt.subplots(figsize=(15, 9))
         ax.margins(tight=True)
 
-        patches, texts = ax.pie(percent, colors=orange_shades, startangle=90, radius=1.2)
-
         labels = ['{0} - {1:1.2f} %'.format(i, j) for i, j in zip(x, percent)]
+        patches, texts = ax.pie(np.round(percent), labels=labels, colors=orange_shades, startangle=90, radius=1.2)
 
         #ax.set_title('Distribution of Expenses', fontsize=9)
         ax.legend(patches, labels, loc='center right', bbox_to_anchor=(1, 0, 0.5, 1), fontsize=16, frameon=False)
